@@ -1,0 +1,16 @@
+{
+  "name" : "squarespace-video-background",
+  "version" : "0.0.1",
+  "description" : "Creates a video background on a Squarespace site.",
+  "author" : {
+    "name" : "Kevin Foley",
+    "email" : "kfoley@squarespace.com",
+    "url" : "http://github.com/foleyatwork"
+  },
+  "dependencies" : {
+    "gulp" : "3.8.11",
+    "gulp-jshint" : "1.9.2",
+    "gulp-uglifyjs" : "0.6.1",
+    "jsdoc-to-markdown" : "0.5.11"
+  }
+}
