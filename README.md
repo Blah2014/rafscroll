@@ -6,11 +6,19 @@ events, on the other hand, do not. Chaining your scroll events to a
 requestAnimationFrame ensures that your transitions and animations will refresh
 each time the monitor refreshes, rather than each time a scroll event is fired.
 
-In it's most simple form, you can use it like this:
+To use the script, take one of the files from the /dist/ folder and drop it into
+your site. I've compiled two versions, one with a polyfill and one without. If
+you're unsure which version to use, use rafscroll.polyfill.mind.js.
 
-    new rafscroll(function() {
-      // Do your thing here.
-    });
+    <script src="rafscroll.polyfill.min.js"></script>
+
+After you've loaded the script you can invoke it like this.
+
+    <script>
+      new rafscroll(function() {
+        // Do your thing here.
+      });
+    </script>
 
 ## Parameters
 
