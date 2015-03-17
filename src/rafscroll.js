@@ -13,51 +13,58 @@
     return;
   }
 
+  // Bind polyfill. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
+  if (!Function.prototype.bind) {
+    Function.prototype.bind = function(oThis) {
+      if (typeof this !== 'function') {
+        // closest thing possible to the ECMAScript 5
+        // internal IsCallable function
+        throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
+      }
+
+      var aArgs   = Array.prototype.slice.call(arguments, 1),
+          fToBind = this,
+          fNOP    = function() {},
+          fBound  = function() {
+            return fToBind.apply(this instanceof fNOP
+                   ? this
+                   : oThis,
+                   aArgs.concat(Array.prototype.slice.call(arguments)));
+          };
+
+      fNOP.prototype = this.prototype;
+      fBound.prototype = new fNOP();
+
+      return fBound;
+    };
+  }
+
   /** @constant {Number} */
   var SCROLL_TIMEOUT_VALUE = 100;
-
-  /** @var {Boolean} */
-  var scrolling = false;
-
-  /** @var {Object} */
-  var scrollEventSubscription;
-
-  /** @var {Object} */
-  var mostRecentScrollEvent;
-
-  /** @var {Function} */
-  var scrollTimeout;
-
-  /**
-   * @param callback
-   * @type {Function}
-   * @callback
-   */
-  var callback;
-
-  /**
-   * @param args
-   * @type {Array}
-   */
-  var args;
 
   /**
    * @class rafscroll
    * @access public
    */
-  function rafscroll(fn, cxt, params) {
-    if (!fn) {
+  function rafscroll(callback, args) {
+    if (!callback) {
       console.warn('rafScroll: No callback supplied, not initiating.');
       return;
     }
 
-    if (typeof fn != 'function') {
+    if (typeof callback != 'function') {
       console.warn('rafScroll: Invalid callback type.');
       return;
     }
 
-    callback = fn;
-    args = params || [];
+    /** @var {Boolean} */
+    this._scrolling = false;
+
+    /** @var {Function} */
+    this._callback = callback;
+
+    /** @var {Array} */
+    this._args = args || [];
 
     this.subscribe();
   }
@@ -70,7 +77,7 @@
      * @memberof rafscroll
      */
     subscribe: function() {
-      addEventListener('scroll', scrollCallback, false);
+      addEventListener('scroll', scrollCallback.bind(this), false);
     },
 
     /**
@@ -79,7 +86,7 @@
      * @example
      */
     unsubscribe: function() {
-      removeEventListener('scroll', scrollCallback, false);
+      removeEventListener('scroll', scrollCallback.bind(this), false);
     }
   };
 
@@ -88,19 +95,19 @@
    * @access private
    */
   function scrollCallback(e) {
-    mostRecentScrollEvent = e;
+    this._mostRecentScrollEvent = e;
 
-    if (scrolling === false) {
-      scrolling = true;
-      rafscrollCallback();
+    if (this._scrolling === false) {
+      this._scrolling = true;
+      rafscrollCallback.call(this);
     }
 
-    if (scrollTimeout) {
-      clearTimeout(scrollTimeout);
+    if (this._scrollTimeout) {
+      clearTimeout(this._scrollTimeout);
     }
 
-    scrollTimeout = setTimeout(function() {
-      scrolling = false;
+    this._scrollTimeout = setTimeout(function() {
+      this._scrolling = false;
     }, SCROLL_TIMEOUT_VALUE);
   }
 
@@ -108,20 +115,20 @@
    * @method rafscrollCallback
    * @access private
    */
-  function rafscrollCallback(e) {
+  function rafscrollCallback() {
     // Add the event to the arguments array.
-    args.unshift(mostRecentScrollEvent);
+    this._args.unshift(this._mostRecentScrollEvent);
 
     // Invoke the callback.
-    callback.apply(window || {}, args);
+    this._callback.apply(window || {}, this._args);
 
     // Remove the event from the arguments array so it doesn't get passed in the
     // next callback instance.
-    args.shift();
+    this._args.shift();
 
     // Invoke the function again if we're still scrolling.
-    if (scrolling === true) {
-      requestAnimationFrame(rafscrollCallback);
+    if (this._scrolling === true) {
+      requestAnimationFrame(rafscrollCallback.bind(this));
     }
   }
 
