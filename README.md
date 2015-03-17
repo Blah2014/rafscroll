@@ -1,13 +1,11 @@
 # rafscroll.js
 rafscroll offloads your scroll events onto a requestAnimationFrame.
 
-## Why do I need this?
 Your monitor refreshes at 60 frames per second (fps). Scroll
 events, on the other hand, do not. Chaining your scroll events to a
 requestAnimationFrame ensures that your transitions and animations will refresh
 each time the monitor refreshes, rather than each time a scroll event is fired.
 
-## How do I use it?
 In it's most simple form, you can use it like this:
 
     new rafscroll(function() {
