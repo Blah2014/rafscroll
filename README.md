@@ -14,11 +14,9 @@ you're unsure which version to use, use rafscroll.polyfill.mind.js.
 
 After you've loaded the script you can invoke it like this.
 
-    <script>
-      new rafscroll(function() {
-        // Do your thing here.
-      });
-    </script>
+    new rafscroll(function() {
+      // Do your thing here.
+    });
 
 ## Parameters
 
