@@ -20,18 +20,21 @@ animation frame. It will be passed the last known scroll event as the first
 argument.
 
 Example:
+
     new rafscroll(someFunction);
 
 ### Context
 {Object} Just an easy way to bind this function to the desired scope.
 
 Example:
+
     new rafscroll(someFunction, this);
 
 ### Arguments
 {Array} In case you need to pass additional arguments
 
 Example:
+
     new rafscroll(someFunction, this, [someVar, someOtherVar]);
 
 ## Methods
