@@ -68,3 +68,19 @@ developer to access the method.
     smoothScroll.unsubscribe(); // unsubsribe from scroll events.
     smoothScroll.subscribe(); // re-subsribe from scroll events.
 
+## Module Loaders
+This script supports amd, CommonJS, or (if all else fails) creates a global
+namespace. The tutorials written above show you how to invoke the function using
+a global namespace. Here's how you can use it with a module loader.
+
+amd:
+
+    require(['rafscroll'], function(rafscroll) {
+      new rafscroll(someFunction);
+    });
+
+CommonJS:
+
+  var rafscroll = require('rafscroll');
+
+  new rafscroll(someFunction);
