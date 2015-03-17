@@ -1,4 +1,5 @@
 /*!
+ * @license
  * rafscroll 0.1
  *
  * Copyright 2015, Kevin Foley - http://github.com/foleyatwork
