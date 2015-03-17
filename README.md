@@ -1,54 +1,57 @@
-<a name="rafscroll"></a>
-#class: rafscroll
-**Members**
+# rafscroll.js
+rafscroll offloads your scroll events onto a requestAnimationFrame.
 
-* [class: rafscroll](#rafscroll)
-  * [new rafscroll()](#new_rafscroll)
-  * [rafscroll.subscribe()](#rafscroll.subscribe)
-  * [rafscroll.unsubscribe()](#rafscroll.unsubscribe)
-
-<a name="new_rafscroll"></a>
-##new rafscroll()
-Offloads your scroll events onto a requestAnimationFrame. This is useful,
-sometimes, when you want to achieve smoother animations on scroll.
-
-### Why would you need a requestAnimationFrame?
+## Why do I need this?
 Your browser refreshes at 60 frames per second (fps). Scroll events, on the
 other hand, do not. Chaining your scroll events to a requestAnimationFrame
 ensures that your transitions and animations will refresh each time the
 refreshes, rather than each time a scroll event is fired.
 
-**Example**  
-<pre><code>
-var smoothScroll = new rafscroll(function(e) {
-  console.log(e); // the last known scroll event.
-});
-</pre></code>
+## How do I use it?
+In it's most simple form, you can do this in just one line of code:
 
-<a name="rafscroll.subscribe"></a>
-##rafscroll.subscribe()
+    var smoothScroll = new rafscroll(callbackFunction);
+
+## Parameters
+
+### Callback
+{Function} A callback function is the first argument. This will get invoked on each
+animation frame. It will be passed the last known scroll event as the first
+argument.
+
+Example:
+    new rafscroll(someFunction);
+
+### Context
+{Object} Just an easy way to bind this function to the desired scope.
+
+Example:
+    new rafscroll(someFunction, this);
+
+### Arguments
+{Array} In case you need to pass additional arguments
+
+Example:
+    new rafscroll(someFunction, this, [someVar, someOtherVar]);
+
+## Methods
+
+### rafscroll.unsubscribe()
+    var smoothScroll = new rafscroll(function(e) {
+      console.log(e);
+    });
+
+    smoothScroll.unsubscribe(); // unsubsribe from scroll events.
+
+### rafscroll.subscribe()
 Subscribe (or re-subscribe) to the scroll events. This gets called
 automatically when the constructor is first invoked, so there's is
 usually no need for a developer to access the method.
 
-**Example**  
-<pre><code>
-var smoothScroll = new rafscroll(function(e) {
-  console.log(e);
-});
+    var smoothScroll = new rafscroll(function(e) {
+      console.log(e);
+    });
 
-smoothScroll.unsubscribe(); // unsubsribe from scroll events.
-smoothScroll.subscribe(); // re-subsribe from scroll events.
-</pre></code>
-
-<a name="rafscroll.unsubscribe"></a>
-##rafscroll.unsubscribe()
-**Example**  
-<pre><code>
-var smoothScroll = new rafscroll(function(e) {
-  console.log(e);
-});
-
-smoothScroll.unsubscribe(); // unsubsribe from scroll events.
-</pre></code>
+    smoothScroll.unsubscribe(); // unsubsribe from scroll events.
+    smoothScroll.subscribe(); // re-subsribe from scroll events.
 

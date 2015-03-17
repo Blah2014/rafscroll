@@ -4,7 +4,7 @@
  * Copyright 2015, Kevin Foley - http://github.com/foleyatwork
  * Released under the WTFPL license - http://www.wtfpl.net/txt/copying/
  */
-(function() {
+ (function() {
   if (!window.requestAnimationFrame) {
     console.info(
       'Your browser does not support requestAnimationFrame. There is a nice polyfill you can use here.',
@@ -48,14 +48,17 @@
   var args;
 
   /**
-   * Offloads your scroll events onto a requestAnimationFrame. This is useful,
-   * sometimes, when you want to achieve smoother animations on scroll.
+   * @name rafscroll.js
+   * @description
+   * # rafscroll.js
+   * rafscroll offloads your scroll events onto a requestAnimationFrame.
    *
-   * ### Why would you need a requestAnimationFrame?
+   * ### Why do I need this?
    * Your browser refreshes at 60 frames per second (fps). Scroll events, on the
    * other hand, do not. Chaining your scroll events to a requestAnimationFrame
    * ensures that your transitions and animations will refresh each time the
    * refreshes, rather than each time a scroll event is fired.
+   *
    * @class rafscroll
    * @access public
    * @example
