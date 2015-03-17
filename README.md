@@ -81,6 +81,6 @@ amd:
 
 CommonJS:
 
-  var rafscroll = require('rafscroll');
+    var rafscroll = require('rafscroll');
 
-  new rafscroll(someFunction);
+    new rafscroll(someFunction);
