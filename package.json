@@ -1,7 +1,7 @@
 {
-  "name" : "squarespace-video-background",
-  "version" : "0.0.1",
-  "description" : "Creates a video background on a Squarespace site.",
+  "name" : "rafscroll",
+  "version" : "0.1.0",
+  "description" : "Offload your scroll events to a requestAnimationFrame.",
   "author" : {
     "name" : "Kevin Foley",
     "email" : "kfoley@squarespace.com",
