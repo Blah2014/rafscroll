@@ -19,9 +19,11 @@ ensures that your transitions and animations will refresh each time the
 refreshes, rather than each time a scroll event is fired.
 
 **Example**  
+<pre><code>
 var smoothScroll = new rafscroll(function(e) {
   console.log(e); // the last known scroll event.
 });
+</pre></code>
 
 <a name="rafscroll.subscribe"></a>
 ##rafscroll.subscribe()
@@ -30,19 +32,23 @@ automatically when the constructor is first invoked, so there's is
 usually no need for a developer to access the method.
 
 **Example**  
+<pre><code>
 var smoothScroll = new rafscroll(function(e) {
   console.log(e);
 });
 
 smoothScroll.unsubscribe(); // unsubsribe from scroll events.
 smoothScroll.subscribe(); // re-subsribe from scroll events.
+</pre></code>
 
 <a name="rafscroll.unsubscribe"></a>
 ##rafscroll.unsubscribe()
 **Example**  
+<pre><code>
 var smoothScroll = new rafscroll(function(e) {
   console.log(e);
 });
 
 smoothScroll.unsubscribe(); // unsubsribe from scroll events.
+</pre></code>
 
