@@ -48,9 +48,20 @@
   var args;
 
   /**
-   * Creates a new rafscroll instance.
+   * Offloads your scroll events onto a requestAnimationFrame. This is useful,
+   * sometimes, when you want to achieve smoother animations on scroll.
+   *
+   * ### Why would you need a requestAnimationFrame?
+   * Your browser refreshes at 60 frames per second (fps). Scroll events, on the
+   * other hand, do not. Chaining your scroll events to a requestAnimationFrame
+   * ensures that your transitions and animations will refresh each time the
+   * refreshes, rather than each time a scroll event is fired.
    * @class rafscroll
    * @access public
+   * @example
+   * var smoothScroll = new rafscroll(function(e) {
+   *   console.log(e); // the last known scroll event.
+   * });
    */
   function rafscroll(fn, cxt, params) {
     if (!fn) {
@@ -73,9 +84,19 @@
   /** @lends rafscroll */
   rafscroll.prototype = {
     /**
+     * Subscribe (or re-subscribe) to the scroll events. This gets called
+     * automatically when the constructor is first invoked, so there's is
+     * usually no need for a developer to access the method.
      * @method subscribe
      * @access public
      * @memberof rafscroll
+     * @example
+     * var smoothScroll = new rafscroll(function(e) {
+     *   console.log(e);
+     * });
+     *
+     * smoothScroll.unsubscribe(); // unsubsribe from scroll events.
+     * smoothScroll.subscribe(); // re-subsribe from scroll events.
      */
     subscribe: function() {
       addEventListener('scroll', scrollCallback, false);
@@ -85,6 +106,12 @@
      * @method unsubscribe
      * @access public
      * @memberof rafscroll
+     * @example
+     * var smoothScroll = new rafscroll(function(e) {
+     *   console.log(e);
+     * });
+     *
+     * smoothScroll.unsubscribe(); // unsubsribe from scroll events.
      */
     unsubscribe: function() {
       removeEventListener('scroll', scrollCallback, false);
