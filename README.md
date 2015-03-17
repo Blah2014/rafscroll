@@ -8,9 +8,11 @@ requestAnimationFrame ensures that your transitions and animations will refresh
 each time the monitor refreshes, rather than each time a scroll event is fired.
 
 ## How do I use it?
-In it's most simple form, you can do this in just one line of code:
+In it's most simple form, you can use it like this:
 
-    var smoothScroll = new rafscroll(callbackFunction);
+    new rafscroll(function() {
+      // Do your thing here.
+    });
 
 ## Parameters
 
