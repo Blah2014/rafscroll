@@ -18,12 +18,20 @@ In it's most simple form, you can use it like this:
 
 ### Callback
 {Function} A callback function is the first argument. This will get invoked on
-each animation frame. It will be passed the last known scroll event as the first
-argument.
+each animation frame.
 
 Example:
 
     new rafscroll(someFunction);
+
+It will be passed the last known scroll event as the first
+argument.
+
+Example:
+
+    new rafscroll(function(e) {
+      console.log(e); // Last known scroll event.
+    });
 
 ### Context
 {Object} Just an easy way to bind this function to the desired scope.
