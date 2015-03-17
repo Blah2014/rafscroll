@@ -36,12 +36,6 @@
   var callback;
 
   /**
-   * @param context
-   * @type {Object}
-   */
-  var context;
-
-  /**
    * @param args
    * @type {Array}
    */
@@ -63,7 +57,6 @@
     }
 
     callback = fn;
-    context = cxt || window;
     args = params || [];
 
     this.subscribe();
@@ -120,7 +113,7 @@
     args.unshift(mostRecentScrollEvent);
 
     // Invoke the callback.
-    callback.apply(context, args);
+    callback.apply(window || {}, args);
 
     // Remove the event from the arguments array so it doesn't get passed in the
     // next callback instance.
