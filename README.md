@@ -28,8 +28,7 @@ Example:
 
     new rafscroll(someFunction);
 
-It will be passed the last known scroll event as the first
-argument.
+It will be passed the last known scroll event as the first argument.
 
 Example:
 
@@ -37,19 +36,12 @@ Example:
       console.log(e); // Last known scroll event.
     });
 
-### Context
-{Object} Just an easy way to bind this function to the desired scope.
-
-Example:
-
-    new rafscroll(someFunction, this);
-
 ### Arguments
 {Array} In case you need to pass additional arguments
 
 Example:
 
-    new rafscroll(someFunction, this, [someVar, someOtherVar]);
+    new rafscroll(someFunction, [someVar, someOtherVar]);
 
 ## Methods
 
