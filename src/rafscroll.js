@@ -59,9 +59,11 @@
    * @class rafscroll
    * @access public
    * @example
+   * <pre><code>
    * var smoothScroll = new rafscroll(function(e) {
    *   console.log(e); // the last known scroll event.
    * });
+   * </pre></code>
    */
   function rafscroll(fn, cxt, params) {
     if (!fn) {
@@ -91,12 +93,14 @@
      * @access public
      * @memberof rafscroll
      * @example
+     * <pre><code>
      * var smoothScroll = new rafscroll(function(e) {
      *   console.log(e);
      * });
      *
      * smoothScroll.unsubscribe(); // unsubsribe from scroll events.
      * smoothScroll.subscribe(); // re-subsribe from scroll events.
+     * </pre></code>
      */
     subscribe: function() {
       addEventListener('scroll', scrollCallback, false);
@@ -107,11 +111,13 @@
      * @access public
      * @memberof rafscroll
      * @example
+     * <pre><code>
      * var smoothScroll = new rafscroll(function(e) {
      *   console.log(e);
      * });
      *
      * smoothScroll.unsubscribe(); // unsubsribe from scroll events.
+     * </pre></code>
      */
     unsubscribe: function() {
       removeEventListener('scroll', scrollCallback, false);
