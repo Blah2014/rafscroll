@@ -1,5 +1,5 @@
 # rafscroll.js
-rafscroll offloads your scroll events onto a requestAnimationFrame.
+rafscroll chains your scroll events to requestAnimationFrame.
 
 Your monitor refreshes at 60 frames per second (fps). Scroll
 events, on the other hand, do not. Chaining your scroll events to a
