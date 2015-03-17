@@ -6,6 +6,9 @@ events, on the other hand, do not. Chaining your scroll events to a
 requestAnimationFrame ensures that your transitions and animations will refresh
 each time the monitor refreshes, rather than each time a scroll event is fired.
 
+This is not a magic fix for smooth scrolling animations. In fact, sometimes
+regular old scroll events are smoother. But this is an easy way to test that out.
+
 To use the script, take one of the files from the /dist/ folder and drop it into
 your site. I've compiled two versions, one with a polyfill and one without. If
 you're unsure which version to use, use rafscroll.polyfill.min.js.

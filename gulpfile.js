@@ -25,7 +25,7 @@ gulp.task('lint', function() {
 });
 
 gulp.task('build-polyfill', ['lint'], function() {
-  return gulp.src(['./src/lib/rAF.js', './src/rafscroll.js'])
+  return gulp.src(['./src/lib/bind.js', './src/lib/rAF.js', './src/rafscroll.js'])
     .pipe(concat('rafscroll.polyfill.min.js'))
     .pipe(uglify(uglifyConfig))
     .pipe(gulp.dest('./dist'));
