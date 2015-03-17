@@ -8,7 +8,7 @@ each time the monitor refreshes, rather than each time a scroll event is fired.
 
 To use the script, take one of the files from the /dist/ folder and drop it into
 your site. I've compiled two versions, one with a polyfill and one without. If
-you're unsure which version to use, use rafscroll.polyfill.mind.js.
+you're unsure which version to use, use rafscroll.polyfill.min.js.
 
     <script src="rafscroll.polyfill.min.js"></script>
 
