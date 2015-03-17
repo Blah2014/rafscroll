@@ -1,6 +1,6 @@
 {
   "name" : "rafscroll",
-  "version" : "0.1.1",
+  "version" : "1.0.0",
   "description" : "Offload your scroll events to a requestAnimationFrame.",
   "author" : {
     "name" : "Kevin Foley",
