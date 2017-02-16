@@ -14,14 +14,15 @@
     return;
   }
 
-  /** @constant {Number} */
+  // How long to wait before we know scrolling is over.
   var SCROLL_TIMEOUT_VALUE = 100;
 
   /**
    * @class rafscroll
-   * @access public
+   * @param {Function} callback
+   * @param {Array}    args
    */
-  function rafscroll(callback, args) {
+  function rafscroll(callback, el) {
     if (!callback) {
       console.warn('rafScroll: No callback supplied, not initiating.');
       return;
@@ -32,80 +33,79 @@
       return;
     }
 
-    /** @var {Boolean} */
-    this._scrolling = false;
-
-    /** @var {Function} */
+    this._boundHandleRAF = this._handleRAF.bind(this);
+    this._boundHandleScroll = this._handleScroll.bind(this);
+    this._boundHandleScrollEnd = this._handleScrollEnd.bind(this);
     this._callback = callback;
-
-    /** @var {Array} */
-    this._args = args || [];
+    this._el = el;
+    this._scrolling = false;
 
     this.subscribe();
   }
 
-  /** @lends rafscroll */
   rafscroll.prototype = {
-    /**
-     * @method subscribe
-     * @access public
-     * @memberof rafscroll
-     */
     subscribe: function() {
-      addEventListener('scroll', scrollCallback.bind(this), false);
+      if (this._isBareEventListener) {
+        addEventListener('scroll', this._boundHandleScroll, false);
+      } else {
+        this._el.addEventListener('scroll', this._boundHandleScroll, false);
+      }
     },
 
-    /**
-     * @access public
-     * @memberof rafscroll
-     * @example
-     */
     unsubscribe: function() {
-      removeEventListener('scroll', scrollCallback.bind(this), false);
+      if (this._isBareEventListener) {
+        removeEventListener('scroll', this._boundHandleScroll, false);
+      } else {
+        this._el.removeEventListener('scroll', this._boundHandleScroll, false);
+      }
+    },
+
+    _isBareEventListener: function() {
+      if (!this._el || this._el === window) {
+        return true;
+      }
+
+      var isGecko = this._isGecko();
+      var isGeckoDefault = isGecko && this._el === document.body;
+      var isNonGeckoDefault = !isGecko && this._el === document.documentElement;
+
+      return isGeckoDefault || isNonGeckoDefault;
+    },
+
+    _handleScroll: function(e) {
+      this._mostRecentScrollEvent = e;
+
+      if (this._scrolling === false) {
+        this._scrolling = true;
+        this._boundHandleRAF();
+      }
+
+      if (this._scrollTimeout) {
+        clearTimeout(this._scrollTimeout);
+      }
+
+      this._scrollTimeout = setTimeout(this._boundHandleScrollEnd, SCROLL_TIMEOUT_VALUE);
+    },
+
+    _handleRAF: function() {
+      // Invoke the callback.
+      this._callback();
+
+      // Invoke the function again if we're still scrolling.
+      if (this._scrolling === true) {
+        requestAnimationFrame(this._boundHandleRAF);
+      }
+    },
+
+    _handleScrollEnd: function() {
+      this._scrolling = false;
+    },
+
+    _isGecko: function() {
+      return navigator.userAgent.indexOf('Gecko') > -1 &&
+        navigator.userAgent.indexOf('AppleWebkit') === -1;
     }
   };
-
-  /**
-   * @callback scrollCallback
-   * @access private
-   */
-  function scrollCallback(e) {
-    this._mostRecentScrollEvent = e;
-
-    if (this._scrolling === false) {
-      this._scrolling = true;
-      rafscrollCallback.call(this);
-    }
-
-    if (this._scrollTimeout) {
-      clearTimeout(this._scrollTimeout);
-    }
-
-    this._scrollTimeout = setTimeout(function() {
-      this._scrolling = false;
-    }, SCROLL_TIMEOUT_VALUE);
-  }
-
-  /**
-   * @method rafscrollCallback
-   * @access private
-   */
-  function rafscrollCallback() {
-    // Add the event to the arguments array.
-    this._args.unshift(this._mostRecentScrollEvent);
-
-    // Invoke the callback.
-    this._callback.apply(window || {}, this._args);
-
-    // Remove the event from the arguments array so it doesn't get passed in the
-    // next callback instance.
-    this._args.shift();
-
-    // Invoke the function again if we're still scrolling.
-    if (this._scrolling === true) {
-      requestAnimationFrame(rafscrollCallback.bind(this));
-    }
-  }
 
   // Export an amd module, commonJS module, or create a namespace.
   if (typeof define === 'function' && define.amd) {
