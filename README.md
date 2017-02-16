@@ -39,13 +39,6 @@ Example:
       console.log(e); // Last known scroll event.
     });
 
-### Arguments
-{Array} In case you need to pass additional arguments
-
-Example:
-
-    new rafscroll(someFunction, [someVar, someOtherVar]);
-
 ## Methods
 
 ### rafscroll.unsubscribe()
